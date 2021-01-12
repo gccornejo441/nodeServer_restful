@@ -7,7 +7,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const Bears = require('./app/models/bears')
+const bearRouter = require('./routes/bearRouter');
 
 // sets out port
 const port = process.env.PORT || 3000;
@@ -21,6 +21,8 @@ router.get('/', (req, res) => {
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
+app.use('/api/bears', bearRouter);
+
 app.use((req, res, next) => {
     res.send(`<html><body><h1>You are at <br> ${__dirname}</h1></body></html>`);
 })
