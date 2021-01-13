@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
 
 const BearSchema = new Schema({
     name: {
-        type: String,
-        required: true,
-        unique: true
+        type: String
     }
 });
 
