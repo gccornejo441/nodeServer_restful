@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const Bears = require('../app/models/bears')
 
@@ -9,13 +10,29 @@ bearRouter.use(bodyParser.json());
 
 bearRouter.route('/')
 .get((req, res, next) => {
-    res.append('Link', ['<http://localhost/>', '<http://localhost:3000/>']);
-    res.type('.html') // => 'text/html'
-    res.send('<html><body><h1>You are currently at /bears</h1></body></html>');
-      res.get('Content-Type');
+    Bears.find({}).exec((err, doc) => {
+        if (doc != null) {
+            console.log('Bear round: ', doc);
+            res.json(doc)
+        } else {
+            err = Error(`${doc} not found`);
+            err.status = 404;
+            next(err)
+        }
+        // res.statusCode = 200;
+        // res.setHeader('Content-Type', 'application/json');
+        // res.json(res)
+    })
 })
-.post((req, res) => {
-    Bears.create(    );
-});
+.post((req, res, next) => {
+    Bears.create(req.body)
+    .then((dish) => {
+        console.log('Dish Created ', dish);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(dish);
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
 
 module.exports = bearRouter;

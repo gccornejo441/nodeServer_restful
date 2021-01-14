@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+
+const URI = 'mongodb://localhost:27017/chapters';
+const connect = mongoose.connect(URI);
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 const BearSchema = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     }
 });
 
-const Bears = mongoose.model('Bears', BearSchema);
+const Bears = mongoose.model('Bears', BearSchema, 'bears');
 
 module.exports = Bears;
